@@ -1,0 +1,77 @@
+/* HMS Global Styles */
+:root {
+  --hms-primary: #0d6efd;
+  --hms-secondary: #6c757d;
+  --hms-success: #198754;
+  --hms-danger: #dc3545;
+  --hms-warning: #ffc107;
+}
+
+body {
+  background-color: #f0f4f8;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.navbar-brand span {
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  border-radius: 12px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
+
+.stat-card {
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.stat-card .stat-icon {
+  font-size: 2rem;
+  opacity: 0.9;
+}
+
+.stat-card .stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.badge-status-booked   { background: #0d6efd; }
+.badge-status-completed { background: #198754; }
+.badge-status-cancelled { background: #dc3545; }
+
+.table th { background-color: #f8f9fa; font-weight: 600; }
+.table-hover tbody tr:hover { background-color: #e8f4fd; }
+
+.btn { border-radius: 8px; }
+.modal-content { border-radius: 12px; border: none; }
+
+.sidebar { background: linear-gradient(135deg, #0d6efd 0%, #0056b3 100%); min-height: 100vh; }
+
+.page-enter-active, .page-leave-active {
+  transition: opacity 0.2s, transform 0.2s;
+}
+.page-enter-from { opacity: 0; transform: translateY(10px); }
+.page-leave-to { opacity: 0; transform: translateY(-10px); }
+
+.avatar-circle {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 1.1rem;
+}
+
+/* Tabs */
+.nav-tabs .nav-link { color: #6c757d; border-radius: 8px 8px 0 0; }
+.nav-tabs .nav-link.active { color: #0d6efd; font-weight: 600; }
+
+/* Form labels */
+.form-label { font-weight: 500; font-size: 0.875rem; }

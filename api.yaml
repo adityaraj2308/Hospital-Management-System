@@ -1,0 +1,214 @@
+openapi: 3.0.0
+info:
+  title: Hospital Management System API
+  version: 1.0.0
+  description: API documentation for HMS project (Patient, Doctor, Admin modules)
+
+servers:
+  - url: http://localhost:5000
+
+paths:
+
+  /api/auth/login:
+    post:
+      summary: Login user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [username, password]
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Login successful
+
+  /api/auth/register:
+    post:
+      summary: Register patient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [username, email, password, name]
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                name:
+                  type: string
+      responses:
+        "201":
+          description: Registration successful
+
+  /api/patient/dashboard:
+    get:
+      summary: Get patient dashboard
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Dashboard data
+
+  /api/patient/doctors:
+    get:
+      summary: Get doctors list
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: specialization
+          in: query
+          schema:
+            type: string
+        - name: name
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of doctors
+
+  /api/patient/appointments:
+    get:
+      summary: Get patient appointments
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Appointment list
+
+    post:
+      summary: Book appointment
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [doctor_id, date, time]
+              properties:
+                doctor_id:
+                  type: integer
+                date:
+                  type: string
+                  format: date
+                time:
+                  type: string
+                reason:
+                  type: string
+      responses:
+        "201":
+          description: Appointment booked
+
+  /api/patient/appointments/{id}:
+    put:
+      summary: Reschedule or cancel appointment
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                date:
+                  type: string
+                time:
+                  type: string
+      responses:
+        "200":
+          description: Updated
+
+    delete:
+      summary: Cancel appointment
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Cancelled
+
+  /api/patient/history:
+    get:
+      summary: Get treatment history
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: History data
+
+  /api/patient/export-csv:
+    post:
+      summary: Export patient treatment history as CSV
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: CSV generated
+        "202":
+          description: Export started (async)
+
+  /api/patient/export-status/{task_id}:
+    get:
+      summary: Check export status
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: task_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Task status
+
+  /api/doctor/dashboard:
+    get:
+      summary: Doctor dashboard
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Doctor data
+
+  /api/admin/dashboard:
+    get:
+      summary: Admin dashboard
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Admin stats
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
